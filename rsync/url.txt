@@ -1,0 +1,1 @@
+https://github.com/Poeschl/Hassio-Addons/tree/main/rsync
