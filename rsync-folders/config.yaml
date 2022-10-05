@@ -1,0 +1,70 @@
+name: Rsync Folders
+description: "Transfers the Hass.io folders (including backups) to a remote rsync server."
+version: 2022.10-1
+slug: rsync_folders
+
+init: false
+startup: once
+boot: manual
+
+hassio_api: true
+hassio_role: backup
+
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+
+map:
+  - config:rw
+  - addons:rw
+  - backup:rw
+  - share:rw
+  - ssl:rw
+  - media:rw
+
+options:
+  #~ server: rsync-server
+  #~ port: 22
+  #~ target: hassio-backups
+  #~ username: user
+  #~ password: password
+  #~ ssh_enabled: true
+
+  server: nd2.localnet
+  port: 18873
+  target: hassio
+  username: hassio
+  password: ziJ4Yi2o
+  ssh_enabled: false
+
+  gen_backup: true
+  metaindex: false
+
+  auto_purge: 0
+  f_config: true
+  f_addons: false
+  f_backup: true
+  f_share: false
+  f_ssl: false
+  f_media: false
+
+schema:
+  server: str
+  port: int
+  target: str
+  username: str
+  password: str
+  auto_purge: int
+  ssh_enabled: bool
+  gen_backup: bool
+  metaindex: bool
+  f_config: bool
+  f_addons: bool
+  f_backup: bool
+  f_share: bool
+  f_ssl: bool
+  f_media: bool
+
