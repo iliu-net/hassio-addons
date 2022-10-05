@@ -26,19 +26,12 @@ map:
   - media:rw
 
 options:
-  #~ server: rsync-server
-  #~ port: 22
-  #~ target: hassio-backups
-  #~ username: user
-  #~ password: password
-  #~ ssh_enabled: true
-
-  server: nd2.localnet
-  port: 18873
-  target: hassio
-  username: hassio
-  password: ziJ4Yi2o
-  ssh_enabled: false
+  server: rsync-server
+  port: 22
+  target: hassio-backups
+  username: user
+  password: password
+  ssh_enabled: true
 
   gen_backup: true
   metaindex: false
