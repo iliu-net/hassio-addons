@@ -1,0 +1,64 @@
+name: wifi hotspot
+description: Connect directly your wifi sensors / cams / lights / outlets to hassio
+version: 0.1.0
+slug: wifi-hotspot
+
+init: false
+startup: system
+boot: manual
+
+hassio_api: false
+hassio_role: default
+
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+
+host_network: true
+apparmor: false
+full_access: true
+host_dbus: true
+
+privileged:
+  - NET_ADMIN
+  #- SYS_ADMIN
+  #- SYS_RAWIO
+  #- SYS_TIME
+  #- SYS_NIC
+
+options:
+  interface: wlan0
+  ssid: ""
+  wpa_passphrase: ""
+  channel: 6
+  address: 192.168.99.1
+  prefix: 24
+  start_range: 10
+  end_range: 200
+  nat: false
+  dns: ""
+  static_ips:
+  - name: outlet1
+    mac: "00:00:00:00:00"
+    ip: 192.168.99.100
+
+schema:
+  interface: str
+  ssid: str
+  wpa_passphrase: str?
+  channel: int
+  address: str
+  prefix: int
+  start_range: int
+  end_range: int
+  nat: bool
+  dns: str?
+  static_ips:
+  - name: str
+    mac: str
+    ip: str
+
+
