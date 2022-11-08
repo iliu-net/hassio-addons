@@ -47,7 +47,7 @@ done
 
 if [ $auto_purge -ge 1 ]; then
   bashio::log.info "Start auto purge, keep last $auto_purge backups"
-  rm `ls -t /backup/*.tar | awk "NR>$auto_purge"`
+  rm -f $(ls -1t /backup | grep '\.tar$' | awk "NR>$auto_purge")
 fi
 
 bashio::log.info " Finished rsync-folder"

@@ -41,6 +41,14 @@ If you use ```wpa_passphrase: ''``` then the created network will be open
 
 ## Backlog
 
-- [x] specify DHCP range
-- [x] fixed IP assignments
-- [x] select WIFI NIC by MAC address
+- Firewall rules
+  - `-N WIFI_OUT`
+  - `-N WIFI_IN`
+  - `-A FORWARD -i $INTERFACE -j WIFI_OUT`
+  - `-A FORWARD -o $INTERFACE -j WIFI_IN`
+  - Create a list of rules for each rule:
+  - first word should be either IN or OUT
+  - -A WIFI_{IN|OUT} ...text of the list item...
+  - Clean-up:
+  - `-X WIFI_OUT`
+  - `-X WIFI_IN`
