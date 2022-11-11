@@ -1,6 +1,6 @@
 name: Rsync Folders
 description: "Transfers the Hass.io folders (including backups) to a remote rsync server."
-version: 2022.11-1
+version: 2022.11-2
 slug: rsync_folders
 
 init: false
