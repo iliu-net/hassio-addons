@@ -2,6 +2,18 @@
 
 CONFIG_PATH=/data/options.json
 
+#
+# Determine which version of IPTABLES to use
+#
+if [ $(iptables -L --line-numbers | grep -E '^[0-9]' | wc -l) -gt $(iptables-nft -L --line-numbers | grep -E '^[0-9]' | wc -l) ] ; then
+  # the assumption is that there are always rules present (i.e. for docker)
+  iptablesV=iptables
+else
+  iptablesV=iptables-nft
+fi
+
+
+
 INTERFACE=$(jq --raw-output ".interface" $CONFIG_PATH)
 SSID=$(jq --raw-output ".ssid" $CONFIG_PATH)
 WPA_PASSPHRASE=$(jq --raw-output ".wpa_passphrase" $CONFIG_PATH)
@@ -59,9 +71,9 @@ term_handler(){
   echo "Stopping..."
   if $NAT ; then
     echo "Removing IPTABLE rules"
-    iptables -t nat -D POSTROUTING -s $NETWORK/$PREFIX -j MASQUERADE
-    iptables -D FORWARD -i $INTERFACE -s $NETWORK/$PREFIX -j ACCEPT
-    iptables -D FORWARD -o $INTERFACE -d $NETWORK/$PREFIX -j ACCEPT
+    $iptablesV -t nat -D POSTROUTING -s $NETWORK/$PREFIX -j MASQUERADE
+    $iptablesV -D FORWARD -i $INTERFACE -s $NETWORK/$PREFIX -j ACCEPT
+    $iptablesV -D FORWARD -o $INTERFACE -d $NETWORK/$PREFIX -j ACCEPT
 
   fi
 
@@ -156,9 +168,9 @@ cat > /etc/dhcp/dhcpd.conf <<-ENDFILE
 if $NAT ; then
   echo "Adding IPTABLES rules"
   set -x
-  iptables -t nat -A POSTROUTING -s $NETWORK/$PREFIX -j MASQUERADE
-  iptables -A FORWARD -i $INTERFACE -s $NETWORK/$PREFIX -j ACCEPT
-  iptables -A FORWARD -o $INTERFACE -d $NETWORK/$PREFIX -j ACCEPT
+  $iptablesV -t nat -A POSTROUTING -s $NETWORK/$PREFIX -j MASQUERADE
+  $iptablesV -A FORWARD -i $INTERFACE -s $NETWORK/$PREFIX -j ACCEPT
+  $iptablesV -A FORWARD -o $INTERFACE -d $NETWORK/$PREFIX -j ACCEPT
   set +x
 fi
 

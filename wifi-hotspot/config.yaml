@@ -1,6 +1,6 @@
 name: wifi hotspot
 description: Connect directly your wifi sensors / cams / lights / outlets to hassio
-version: 0.1.0
+version: 0.1.1
 slug: wifi-hotspot
 
 init: false
